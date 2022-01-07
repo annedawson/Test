@@ -8,16 +8,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +59,17 @@ fun MainScreen() {
                 style = TextStyle(color = Color.Blue)
             )
             OutlinedTextField(
+                modifier = Modifier.padding(bottom = 16.dp),
                 value = "",
                 onValueChange = { },
                 label = { Text("Name") }
             )
-
+            var stringState by remember {
+                mutableStateOf<String>("Test")
+            }
+            Button(onClick = { stringState = "Success" }) {
+                Text(text = stringState)
+            }
         }
     }
 }
