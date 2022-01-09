@@ -13,7 +13,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+  import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,6 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
@@ -48,20 +49,24 @@ fun MainScreen() {
             modifier = Modifier
                 .padding(64.dp)
                 .fillMaxSize(1f),
-            verticalArrangement = Arrangement.Bottom
+            verticalArrangement = Arrangement.Top
         ) {
             Log.d("TEST1", "in MainScreen in ColumnScope")
-
-            Text(
-                text = "Hello!",
-                modifier = Modifier.padding(bottom = 16.dp),
-                //color = Color.Green,
-                style = TextStyle(color = Color.Blue)
-            )
+            var name by rememberSaveable {
+                mutableStateOf("")
+            }
+            if (name.isNotEmpty()) {
+                Text(
+                    text = "Hello, $name!",
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    //color = Color.Green,
+                    style = TextStyle(color = Color.Blue)
+                )
+            }
             OutlinedTextField(
                 modifier = Modifier.padding(bottom = 16.dp),
-                value = "",
-                onValueChange = { },
+                value = name,
+                onValueChange = { name = it },
                 label = { Text("Name") }
             )
             var stringState by remember {
